@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <style>
+      .content-box {
+        display: flex;
+        flex-wrap: wrap;
+        width: 440px;
+        margin: auto;
+      }
+      .module-block {
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+        color: #fff;
+        font-size: 22px;
+        margin: 20px 10px;
+      }
+      .module-block a {
+        color: #fff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <h1><%= title %></h1>
+    <p>欢迎来 <%= title %></p> -->
+    <div class="content-box">
+      <div class="module-block" style="background: #D7C4BB;"><a href="/edit?type=it">互联网</a></div>
+      <div class="module-block" style="background: #AB3B3A;"><a href="/edit?type=manager">笑料</a></div>
+      <div class="module-block" style="background: #FB966E;"><a href="/edit?type=cookie">管理</a></div>
+      <div class="module-block" style="background: #F8C3CD;"><a href="/edit?type=sanw">散文</a></div>
+      <div class="module-block" style="background: #572A3F;"><a href="/config">模块配置</a></div>
+    </div>
+  </body>
+</html>

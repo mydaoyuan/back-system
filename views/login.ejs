@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+  </head>
+  <style>
+    .login {
+      text-align: center;
+      font-size: 16px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding-bottom: 20px;
+      border-radius: 4px;
+      padding-left: 20px;
+      padding-right: 20px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 300px;
+    }
+    .input-block {
+      margin: 20px;
+    }
+    input {
+      padding: 2px;
+      border-radius: 4px;
+      outline: none;
+      box-shadow: none;
+      border: 1px solid #ccc;
+      height: 20px;
+      vertical-align: middle;
+      width: 180px;
+    }
+    .btn {
+      width: 260px;
+      background: #0095ff;
+      outline: none;
+      border: none;
+      font-size: 16px;
+      border-radius: 4px;
+      padding: 6px;
+      margin-top: 20px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+  <body>
+      <form action="/login" method="post" class="login" id="login_form">
+        <div class="input-block">
+          <label for="username">用户名：</label>
+          <input type="text" name="username" id="username">
+        </div>
+        <div class="input-block">
+          <label for="username">密&emsp;码：</label>
+          <input type="text" name="password" id="password">
+        </div>
+        <button type="button" class="btn" name="button">提交</button>
+      </form>
+      <script type="text/javascript">
+        var button = document.getElementsByClassName('btn')[0];
+        button.addEventListener('click', (e) => {
+          e.preventdefault;
+          var form = document.getElementById('login_form');
+          var username = form.username.value;
+          var password = form.password.value;
+          if (!username || !password) {
+            alert('请输入完整用户名和密码');
+            return ;
+          }
+          var data = {
+            username,
+            password
+          }
+          // $.ajax({
+          //   type: 'post',
+          //   url: '/data/login_in?username=' + data.username + '&password=' + data.password,
+          //   data: data
+          // })
+          // .done((data) => {
+          //   console.log(data)
+          // })
+          $.ajax({
+            type: 'POST',
+            url: '/data/login_in',
+            data: data,
+            success: function(data){
+                if(data.status){
+                    window.location.href = '/';
+                }else{
+                    alert('登录失败');
+                }
+            },
+            error: function(){
+                alert('登录失败');
+            },
+            dataType: 'json'
+        });
+        })
+      </script>
+  </body>
+</html>

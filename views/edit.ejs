@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <style>
+      .edit {
+        text-align: center;
+        font-size: 16px;
+        display: block;
+        padding-bottom: 20px;
+        border-radius: 4px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin: auto;
+        width: 600px;
+      }
+      .input-block {
+        margin: 20px;
+      }
+      input {
+        padding: 2px;
+        border-radius: 4px;
+        outline: none;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        height: 20px;
+        vertical-align: middle;
+        width: 300px;
+      }
+      .btn {
+        width: 100px;
+        background: #0095ff;
+        outline: none;
+        border: none;
+        font-size: 16px;
+        border-radius: 4px;
+        padding: 6px;
+        margin-top: 20px;
+        color: #fff;
+        cursor: pointer;
+      }
+      table {
+        width: 820px;
+        margin: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      th {
+        padding: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="edit" id="edit_form">
+      <div class="input-block">
+        <label for="title">标题：</label>
+        <input type="text" name="title" id="title">
+      </div>
+      <div class="input-block">
+        <label for="img">图片：</label>
+        <input type="text" name="img" id="img">
+      </div>
+      <div class="input-block">
+        <label for="text">URL：</label>
+        <input type="text" name="url" id="url">
+      </div>
+      <button type="button" class="btn" name="button">提交</button>
+    </form>
+    <table>
+      <tr>
+        <th>编号</th>
+        <th>id</th>
+        <th>标题</th>
+        <th>图片</th>
+        <th>URL</th>
+        <th>时间</th>
+      </tr>
+      <%for(var i in data){%>
+          <tr style="text-align:center;height:26px;color:#4C4C4C;">
+              <td width="10px;"><%=(parseInt(i)+1)%></td>
+              <td><%=data[i].id%></td>
+              <td><%=data[i].title%></td>
+              <td><%=data[i].img%></td>
+              <td><%=data[i].url%></td>
+              <td><%=data[i].time%></td>
+          </tr>
+      <%}%>
+    </table>
+    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+    <script>
+      function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+          if (r != null) return unescape(r[2]);
+          return null;
+      }
+      $(function(){
+        var type = getQueryString('type');
+        var btn = $('.btn').click(function(){
+          if(!type){
+            return;
+          }
+          var title = $('#title').val();
+          var url = $('#url').val();
+          var img = $('#img').val();
+          var obj = {
+            type: type,
+            title: title,
+            url: url,
+            img: img
+          };
+          $.ajax({
+            type: 'POST',
+            url: '/data/write',
+            data: obj,
+            success: function(data) {
+              if(data.status){
+                alert('添加数据成功');
+                window.location.reload();
+              }else{
+                alert('添加失败');
+              }
+            },
+            error: function(){
+              alert('添加失败');
+            },
+            dataType: 'json'
+          })
+        })
+      })
+    </script>
+  </body>
+</html>
